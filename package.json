@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "watch": "nodemon app.js",
+    "dev": "npm run watch"
+  },
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}
