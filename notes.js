@@ -29,9 +29,8 @@ var addNote = (title, body) => {
 
   if (notes.filter((note) => note.title === title).length === 0) {
     notes.push(newNote);
+    saveNotes(notes);
   }
-
-  saveNotes(notes);
 };
 
 var getAll = () => {
