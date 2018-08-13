@@ -7,11 +7,15 @@ const origNote = {
 };
 
 var addNote = (title, body) => {
-  console.log('Adding note', title, body);
-
   var notes = getAll();
+  var newNote = {
+    title,
+    body
+  };
 
-  notes.push({title, body});
+  if (notes.filter((note) => note.title === title).length === 0) {
+    notes.push(newNote);
+  }
 
   writeToFile(notes);
 };
