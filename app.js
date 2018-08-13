@@ -2,4 +2,5 @@ const notes = require("./notes");
 
 console.log('hello');
 
-notes.removeNote("title2");
+notes.addNote("title2", "body");
+ notes.removeNote("title");

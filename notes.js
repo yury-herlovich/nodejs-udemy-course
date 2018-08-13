@@ -43,10 +43,18 @@ var getNote = (title) => {
 
 var removeNote = (title) => {
   var notes = fetchNotes();
+  var index = null;
 
-  notes = notes.filter((note) => note.title !== title);
+  notes.forEach((note, ind) => {
+    if (note.title === title) {
+      index = ind;
+    }
+  });
 
-  saveNotes(notes);
+  if (index !== null) {
+    notes.splice(index, 1);
+    saveNotes(notes);
+  }
 };
 
 
