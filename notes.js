@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-const notesFile = "notes.json";
+const notesFile = "notes-data.json";
 const origNote = {
   title: 'Some Note',
   body: 'Some Body'
@@ -21,15 +21,14 @@ var addNote = (title, body) => {
 };
 
 var getAll = () => {
-  var notesString = fs.readFileSync(notesFile);
+  var notes = [];
 
   try {
-    var notes = JSON.parse(notesString);
-  } catch (e) {
-    notes = [];
-  }
+    var notesString = fs.readFileSync(notesFile);
+    notes = JSON.parse(notesString);
+  } catch (e) {}
 
-  return notes ? notes : [];
+  return notes;
 };
 
 var getNote = (title) => {
