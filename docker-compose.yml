@@ -3,10 +3,11 @@ services:
 
   web:
     image: node:alpine
-    command: npm run dev
+    command: npm run debug
     container_name: nodejs
     ports:
       - "3000:3000"
+      - "9229:9229"
     volumes:
       - ./:/application
     working_dir: /application
