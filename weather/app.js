@@ -1,15 +1,16 @@
-const googleURL = "https://maps.googleapis.com/maps/api/geocode/json";
+const request = require("request");
+const fs = require("fs");
 
-console.log("start");
+// const data = require("./data.json");
 
-setTimeout(() => {
-  console.log("first tomeout");
-}, 0);
+const geoCodeURL = "https://maps.googleapis.com/maps/api/geocode/json";
+const address = "7400 Hollywood Blvd";
 
-setTimeout(log, 0, "hi", "Yury");
+// console.log(data);
 
-function log(arg, name) {
-  console.log("log", arg, name);
-};
-
-console.log("finish");
+// request({
+//   url: geoCodeURL + "?address=" + encodeURIComponent(address),
+//   json: true
+// }, (err, response, body) => {
+//   console.log(JSON.stringify(body, null, 1));
+// });
