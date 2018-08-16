@@ -1,15 +1,13 @@
 const request = require("request");
 
-// const data = require("./data.json");
+const geocode = require("./geocode");
 
-const geoCodeURL = "https://maps.googleapis.com/maps/api/geocode/json";
 const address = "7400 Hollywood Blvd";
 
-// console.log(data);
-
-// request({
-//   url: geoCodeURL + "?address=" + encodeURIComponent(address),
-//   json: true
-// }, (err, response, body) => {
-//   console.log(JSON.stringify(body, null, 1));
-// });
+geocode.geocodeAddress(address, (_err, _resp) => {
+  if (_err) {
+    console.log(_err);
+  } else {
+    console.log(_resp);
+  }
+});
