@@ -9,7 +9,7 @@ services:
       - "3000:3000"
       - "9229:9229"
     volumes:
-      - ./weather:/application
+      - ./webserver:/application
     working_dir: /application
     restart: "no"
 
