@@ -5,18 +5,14 @@ const forecast = require("./forecast");
 
 const address = "7400 Hollywood Blvd";
 
-geocode.geocodeAddress(address, (_err, _resp) => {
-  if (_err) {
-    console.log(_err);
-  } else {
-    console.log(_resp.address);
-
-    forecast.getForecast(_resp.latitude, _resp.longitude, (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(result);
-      }
-    });
-  }
-});
+geocode.geocodeAddress(address)
+  .then((response) => {
+    console.log("Address: ", response.address);
+    return forecast.getForecast(response.latitude, response.longitude)
+  })
+  .then((result) => {
+    console.log("Temperature: ", result);
+  })
+  .catch((errorMessage) => {
+    console.log(errorMessage);
+  });
