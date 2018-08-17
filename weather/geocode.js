@@ -1,7 +1,7 @@
 const request = require("request");
 
 const geoCodeURL = "https://maps.googleapis.com/maps/api/geocode/json";
-// const data = require("./data.json");
+const data = require("./data.json");
 
 var geocodeAddress = (address, callback) => {
   request({
@@ -9,6 +9,9 @@ var geocodeAddress = (address, callback) => {
     json: true
   }, (_err, _resp, _body) => {
     var error, response;
+
+    // temp
+    _body = data;
 
     if (_err) {
       error = "Unable to connect to Google servers.";
