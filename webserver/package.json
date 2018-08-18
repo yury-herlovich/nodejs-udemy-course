@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "watch": "nodemon app.js",
+    "watch": "nodemon app.js --ext js,hbs",
     "dev": "npm run watch",
     "prod": "node app.js",
     "debug": "nodemon --inspect-brk=0.0.0.0:9229 app.js"
@@ -15,6 +15,7 @@
     "nodemon": "^1.18.3"
   },
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "hbs": "^4.0.1"
   }
 }
