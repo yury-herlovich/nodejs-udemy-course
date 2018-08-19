@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "watch": "nodemon app.js --ext js,hbs",
+    "dev": "npm run watch",
+    "prod": "node app.js",
+    "debug": "nodemon --inspect-brk=0.0.0.0:9229 app.js"
+  },
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.3"
+  }
+}
