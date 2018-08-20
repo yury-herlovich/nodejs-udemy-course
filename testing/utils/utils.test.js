@@ -1,3 +1,4 @@
+const expect = require("expect");
 const utils = require("./utils");
 
 it('should add two numbers', () => {
@@ -6,18 +7,24 @@ it('should add two numbers', () => {
 
   var res = utils.add(a, b);
 
-  if (res !== a + b) {
-    throw new Error(`Expected ${a + b}, but got ${res}`);
-  }
+  expect(res).toBe(a + b);
 });
 
 
-it ('should square a number', () => {
+it('should square a number', () => {
   var x = 8;
 
   var res = utils.square(x);
 
-  if (res !== x * x) {
-    throw new Error(`Expected ${x * x}, but got ${res}`);
-  }
+  expect(res).toBe(x ** 2);
+})
+
+it('should async add two numbers', (done) => {
+  var a = 5,
+      b = 9;
+
+  utils.asyncAdd(a, b, (res) => {
+    expect(res).toBe(a + b);
+    done();
+  })
 })

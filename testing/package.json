@@ -14,7 +14,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "expect": "^23.5.0",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.3"
-  }
+  },
+  "dependencies": {}
 }
