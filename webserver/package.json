@@ -3,7 +3,8 @@
     "watch": "nodemon app.js --ext js,hbs",
     "dev": "npm run watch",
     "prod": "node app.js",
-    "debug": "nodemon --inspect-brk=0.0.0.0:9229 app.js"
+    "debug": "nodemon --inspect-brk=0.0.0.0:9229 app.js",
+    "test": "mocha **/*.test.js"
   },
   "name": "nodejs",
   "version": "1.0.0",
