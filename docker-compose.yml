@@ -3,7 +3,7 @@ services:
 
   web:
     image: node:alpine
-    command: npm run test-watch
+    command: npm run dev
     container_name: nodejs
     ports:
       - "3000:3000"
@@ -12,9 +12,28 @@ services:
       - ./testing:/application
     working_dir: /application
     restart: "no"
+    links:
+      - mongo
 
+  mongo:
+    image: mvertes/alpine-mongo
+    container_name: mongo_for_node
+    volumes:
+      - ./db:/data/db
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    restart: always
 
-networks:
-  default:
-    external:
-      name: my-network
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8091:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+    links:
+      - mongo
