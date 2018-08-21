@@ -10,6 +10,7 @@ services:
       - "9229:9229"
     volumes:
       - ./todo_api:/application
+      - ./.env:/application/.env
     working_dir: /application
     restart: "no"
 
@@ -19,9 +20,9 @@ services:
     ports:
       - 8091:8081
     environment:
-      ME_CONFIG_MONGODB_SERVER: ds229552.mlab.com
-      ME_CONFIG_MONGODB_PORT: 29552
+      ME_CONFIG_MONGODB_SERVER: ${MONGO_HOST}
+      ME_CONFIG_MONGODB_PORT: ${MONGO_PORT}
       ME_CONFIG_MONGODB_ENABLE_ADMIN: "false"
-      ME_CONFIG_MONGODB_AUTH_DATABASE: yury-test
-      ME_CONFIG_MONGODB_AUTH_USERNAME: qw4u
-      ME_CONFIG_MONGODB_AUTH_PASSWORD: EVSm6pNugKpvEosT
+      ME_CONFIG_MONGODB_AUTH_DATABASE: ${MONGO_DB}
+      ME_CONFIG_MONGODB_AUTH_USERNAME: ${MONGO_USER}
+      ME_CONFIG_MONGODB_AUTH_PASSWORD: ${MONGO_PASS}

@@ -1,13 +1,18 @@
+require('dotenv').config();
 const MongoClient = require('mongodb').MongoClient;
 
 // Connection URL
-const mongoUser = 'qw4u';
-const mongoPass = 'EVSm6pNugKpvEosT';
-const mongoURL = `mongodb://${mongoUser}:${mongoPass}@ds229552.mlab.com:29552/yury-test`;
+const envConfig = process.env;
+
+const mongoURL = `mongodb://${envConfig.MONGO_USER}:${envConfig.MONGO_PASS}@${envConfig.MONGO_HOST}:${envConfig.MONGO_PORT}/${envConfig.MONGO_DB}`;
 
 // Use connect method to connect to the server
 MongoClient.connect(mongoURL, { useNewUrlParser: true }, function(err, db) {
-  console.log("Connected successfully to server");
+  if (err) {
+    console.log('ERROR: ', err);
+  } else {
+    console.log("Connected successfully to server");
 
-  db.close();
+    db.close();
+  }
 });
