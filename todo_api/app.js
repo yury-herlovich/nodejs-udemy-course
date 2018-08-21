@@ -1,3 +1,1 @@
-console.log('start mongo');
-
-const db = require('./playground/mongodb-connect');
+require('./playground/mongodb-connect');
