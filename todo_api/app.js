@@ -1,1 +1,2 @@
-require('./playground/mongodb-connect');
+require('dotenv').config();
+require('./playground/mongodb-find');
