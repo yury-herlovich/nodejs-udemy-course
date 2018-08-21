@@ -9,7 +9,7 @@ services:
       - "3000:3000"
       - "9229:9229"
     volumes:
-      - ./testing:/application
+      - ./todo_api:/application
     working_dir: /application
     restart: "no"
     links:
