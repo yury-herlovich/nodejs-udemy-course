@@ -1,2 +1,3 @@
 require('dotenv').config();
-require('./playground/mongodb-find');
+require('./playground/mongodb-connect');
+require('./playground/mongodb-delete');
