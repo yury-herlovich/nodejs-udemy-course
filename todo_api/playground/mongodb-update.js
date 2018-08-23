@@ -3,7 +3,7 @@ const { MongoClient, ObjectID } = require('mongodb');
 // Connection URL
 const envConfig = process.env;
 
-const mongoURL = `mongodb://${envConfig.MONGO_USER}:${envConfig.MONGO_PASS}@${envConfig.MONGO_HOST}:${envConfig.MONGO_PORT}/${envConfig.MONGO_DB}`;
+const mongoURL = `mongodb://${envConfig.DB_USER}:${envConfig.DB_PASS}@${envConfig.DB_HOST}:${envConfig.DB_PORT}/${envConfig.DB_DATABASE}`;
 
 // Use connect method to connect to the server
 MongoClient.connect(mongoURL, { useNewUrlParser: true }, (err, client) => {
@@ -12,7 +12,7 @@ MongoClient.connect(mongoURL, { useNewUrlParser: true }, (err, client) => {
   }
 
   console.log("Connected to MongoDB server");
-  var db = client.db(envConfig.MONGO_DB);
+  var db = client.db(envConfig.DB_DATABASE);
 
   db.collection('Todos')
     .findOneAndUpdate({
