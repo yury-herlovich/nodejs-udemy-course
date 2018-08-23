@@ -1,4 +1,4 @@
 require('dotenv').config();
 
 // require('./playground/mongodb-connect');
-require('./server/server.js');
+require('./models/todo.js');

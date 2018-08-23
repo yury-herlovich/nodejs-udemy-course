@@ -15,21 +15,24 @@ mongoose.connect(dbURL, {useNewUrlParser: true});
 // Todo model
 var Todo = mongoose.model('Todo', {
   text: {
-    type: String
+    type: String,
+    required: true,
+    minlength: 1,
+    trim: true
   },
   completed: {
-    type: Boolean
+    type: Boolean,
+    default: false
   },
   completedAt: {
-    type: Number
+    type: Number,
+    default: null
   }
 });
 
 // new data
 var newTodo = new Todo({
-  text: 'Learn something.',
-  completed: 'false',
-  completedAt: Math.floor(+new Date() / 1000)
+  text: 'Learn something.'
 });
 
 // save data
@@ -37,5 +40,5 @@ newTodo.save()
   .then((doc) => {
     console.log('Saved todo', doc);
   }, (err) => {
-    console.log('Unable to save todo.');
+    console.log('Unable to save todo: ', err._message);
   });
