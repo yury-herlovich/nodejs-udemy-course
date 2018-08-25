@@ -1,5 +1,8 @@
 var mongoose = require('mongoose');
 
+// mongoose.set('debug', true);
+// mongoose.set('useFindAndModify', true);
+
 // db config
 const dbHost = process.env.DB_HOST;
 const dbPort = process.env.DB_PORT;
