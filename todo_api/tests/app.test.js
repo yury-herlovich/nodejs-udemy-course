@@ -1,6 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const should = chai.should();
+const { ObjectID } = require('mongodb');
 
 chai.use(chaiHttp);
 
@@ -8,8 +9,8 @@ const { app } = require('./../app');
 const { Todo } = require('./../models/todo');
 
 const todos = [
-  { text: 'First test todo.' },
-  { text: 'Second test todo.' },
+  { _id: new ObjectID(), text: 'First test todo.' },
+  { _id: new ObjectID(), text: 'Second test todo.' },
 ];
 
 beforeEach((done) => {
@@ -86,7 +87,65 @@ describe('GET /todos', () => {
         res.body.todos.should.lengthOf(2);
 
         done();
-
       });
   });
 });
+
+
+describe('GET /todos/:id', () => {
+  it('Should return todo doc', (done) => {
+    var id = todos[0]._id.toHexString();
+
+    chai.request(app)
+      .get(`/todos/${id}`)
+      .send()
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        res.should.have.status(200);
+        res.body.should.have.property('todo');
+        res.body.todo._id.should.equal(id);
+        res.body.todo.text.should.equal(todos[0].text);
+
+        done();
+      })
+  })
+
+  it('Should return 404 if todo not found', (done) => {
+    var id = new ObjectID().toHexString();
+
+    chai.request(app)
+      .get(`/todos/${id}`)
+      .send()
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        res.should.have.status(404);
+        res.body.should.be.empty;
+
+        done();
+      })
+  })
+
+  it('Should return 404 for non-object ids', (done) => {
+    var id = 123;
+
+    chai.request(app)
+      .get(`/todos/${id}`)
+      .send()
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        res.should.have.status(404);
+        res.body.should.be.empty;
+
+        done();
+      })
+  })
+})
