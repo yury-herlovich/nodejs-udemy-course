@@ -4,11 +4,19 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
-var { app } = require('./../app');
+const { app } = require('./../app');
 const { Todo } = require('./../models/todo');
+
+const todos = [
+  { text: 'First test todo.' },
+  { text: 'Second test todo.' },
+];
 
 beforeEach((done) => {
   Todo.remove({})
+    .then((() => {
+      return Todo.insertMany(todos);
+    }))
     .then(() => done());
 })
 
@@ -29,9 +37,10 @@ describe('POST /todos', () => {
 
         res.body.text.should.equal(text);
 
-        Todo.findOneAndRemove({text})
+        Todo.find({text})
           .then((todos) => {
-            todos.text.should.be.equal(text);
+            todos.should.lengthOf(1);
+            todos[0].text.should.be.equal(text);
             done();
           })
           .catch((err) => done(err));
@@ -50,12 +59,34 @@ describe('POST /todos', () => {
 
         res.should.have.status(400);
 
-        Todo.findOneAndRemove()
+        Todo.find()
           .then((todos) => {
-            chai.expect(todos).be.null
+            todos.should.lengthOf(2);
+            // chai.expect(todos).be.null
             done();
           })
           .catch((err) => done(err));
+      });
+  });
+});
+
+
+describe('GET /todos', () => {
+  it('Should return array of todos', (done) => {
+    chai.request(app)
+      .get('/todos')
+      .send()
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        res.should.have.status(200);
+        res.body.should.have.property('todos');
+        res.body.todos.should.lengthOf(2);
+
+        done();
+
       });
   });
 });
