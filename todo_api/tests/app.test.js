@@ -35,7 +35,7 @@ describe('POST /todos', () => {
         res.should.have.status(201);
         res.should.be.json;
 
-        res.body.text.should.equal(text);
+        res.body.todo.text.should.equal(text);
 
         Todo.find({text})
           .then((todos) => {
