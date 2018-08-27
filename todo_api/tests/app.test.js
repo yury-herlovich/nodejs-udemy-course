@@ -110,8 +110,8 @@ describe('GET /todos/:id', () => {
         res.body.todo.text.should.equal(todos[0].text);
 
         done();
-      })
-  })
+      });
+  });
 
   it('Should return 404 if todo not found', (done) => {
     var id = new ObjectID().toHexString();
@@ -128,8 +128,8 @@ describe('GET /todos/:id', () => {
         res.body.should.be.empty;
 
         done();
-      })
-  })
+      });
+  });
 
   it('Should return 404 for non-object ids', (done) => {
     var id = 123;
@@ -146,6 +146,82 @@ describe('GET /todos/:id', () => {
         res.body.should.be.empty;
 
         done();
-      })
-  })
-})
+      });
+  });
+});
+
+describe('DELETE /todos/:id', () => {
+  it('Should remove a todo', (done) => {
+    var id = todos[0]._id.toHexString();
+
+    chai.request(app)
+      .delete(`/todos/${id}`)
+      .send()
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        res.should.have.status(200);
+        res.body.should.have.property('todo');
+        res.body.todo._id.should.equal(id);
+        res.body.todo.text.should.equal(todos[0].text);
+
+        Todo.findById(id)
+          .then((doc) => {
+            chai.expect(doc).to.be.null;
+
+            done();
+          })
+          .catch((err) => done(err));
+      });
+  });
+
+  it('Should return 404 if todo not found', (done) => {
+    var id = new ObjectID().toHexString();
+
+    chai.request(app)
+      .delete(`/todos/${id}`)
+      .send()
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        res.should.have.status(404);
+        res.body.should.be.empty;
+
+        Todo.find()
+          .then((todos) => {
+            todos.should.lengthOf(2);
+
+            done();
+          })
+          .catch((err) => done(err));
+      });
+  });
+
+  it('Should return 404 if id not valid', (done) => {
+    var id = 123;
+
+    chai.request(app)
+      .delete(`/todos/${id}`)
+      .send()
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        res.should.have.status(404);
+        res.body.should.be.empty;
+
+        Todo.find()
+          .then((todos) => {
+            todos.should.lengthOf(2);
+
+            done();
+          })
+          .catch((err) => done(err));
+      });
+  });
+});

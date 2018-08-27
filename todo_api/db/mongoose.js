@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 // mongoose.set('debug', true);
-// mongoose.set('useFindAndModify', true);
+// mongoose.set('useFindAndModify', false);
 
 // db config
 const dbHost = process.env.DB_HOST;
