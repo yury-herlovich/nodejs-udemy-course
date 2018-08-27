@@ -3,7 +3,7 @@ services:
 
   web:
     image: node:alpine
-    command: npm run test-watch
+    command: npm run dev
     container_name: nodejs
     ports:
       - "3000:3000"
