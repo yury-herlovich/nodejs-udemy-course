@@ -11,12 +11,13 @@ services:
     volumes:
       - ./todo_api:/application
       - ./.env:/application/.env
+      - ./.env_test:/application/.env_test
     working_dir: /application
     restart: "no"
 
   mongo-express:
     image: mongo-express
-    restart: always
+    restart: "no"
     ports:
       - 8091:8081
     environment:

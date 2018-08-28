@@ -10,7 +10,12 @@ const dbDatabase = process.env.DB_DATABASE;
 const dbUser = process.env.DB_USER;
 const dbPass = process.env.DB_PASS;
 
-const dbURL = `mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbDatabase}`;
+if (process.env.NODE_ENV === 'test') {
+  const dbURL = `mongodb://${dbHost}:${dbPort}/${dbDatabase}`;
+} else {
+  const dbURL = `mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbDatabase}`;
+}
+
 
 mongoose.Promise = global.Promise;
 mongoose.connect(dbURL, {useNewUrlParser: true});

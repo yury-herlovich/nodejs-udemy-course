@@ -1,4 +1,9 @@
-require('dotenv').config();
+if (process.env.NODE_ENV === 'test') {
+  require('dotenv').config({path: `${process.cwd()}/.env_test`});
+} else {
+  require('dotenv').config({path: `${process.cwd()}/.env`});
+}
+
 const _ = require('lodash');
 
 const express = require('express');
