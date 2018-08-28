@@ -2,6 +2,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const should = chai.should();
 const { ObjectID } = require('mongodb');
+const _ = require('lodash');
 
 chai.use(chaiHttp);
 
@@ -9,8 +10,15 @@ const { app } = require('./../app');
 const { Todo } = require('./../models/todo');
 
 const todos = [
-  { _id: new ObjectID(), text: 'First test todo.' },
-  { _id: new ObjectID(), text: 'Second test todo.' },
+  {
+    _id: new ObjectID(),
+    text: 'First test todo.'
+  }, {
+    _id: new ObjectID(),
+    text: 'Second test todo.',
+    completed: true,
+    completedAt: 333
+  },
 ];
 
 beforeEach((done) => {
@@ -222,6 +230,76 @@ describe('DELETE /todos/:id', () => {
             done();
           })
           .catch((err) => done(err));
+      });
+  });
+});
+
+describe('PATCH /todos/:id', () => {
+  it('Should update the todo', (done) => {
+    var id = todos[0]._id.toHexString();
+    var text = 'New text for first todo.';
+
+    chai.request(app)
+      .patch(`/todos/${id}`)
+      .send({text, completed: true})
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        res.should.have.status(200);
+        res.body.should.have.property('todo');
+        res.body.todo.text.should.equal(text);
+        res.body.todo.completed.should.be.true;
+        _.isInteger(res.body.todo.completedAt).should.be.true;
+
+        // check DB
+        Todo.findById(id)
+          .then((todo) => {
+            todo.should.be.not.empty;
+            todo.text.should.equal(text);
+            todo.completed.should.be.true;
+            _.isInteger(todo.completedAt).should.be.true;
+
+            done();
+          })
+          .catch(err => {
+            done(err);
+          });
+      });
+  });
+
+  it('Should clear compleatedAt when todo is not completed', (done) => {
+    var id = todos[1]._id.toHexString();
+    var text = 'New text for second todo.';
+
+    chai.request(app)
+      .patch(`/todos/${id}`)
+      .send({text, completed: false})
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        res.should.have.status(200);
+        res.body.should.have.property('todo');
+        res.body.todo.text.should.equal(text);
+        res.body.todo.completed.should.be.false;
+        chai.expect(res.body.todo.completedAt).to.be.null;
+
+        // check DB
+        Todo.findById(id)
+          .then((todo) => {
+            todo.should.be.not.empty;
+            todo.text.should.equal(text);
+            todo.completed.should.equal(false);
+            chai.expect(todo.completedAt).to.be.null;
+
+            done();
+          })
+          .catch(err => {
+            done(err);
+          });
       });
   });
 });
