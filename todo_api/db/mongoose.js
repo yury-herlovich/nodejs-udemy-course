@@ -16,7 +16,6 @@ if (process.env.NODE_ENV === 'test') {
   const dbURL = `mongodb://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbDatabase}`;
 }
 
-
 mongoose.Promise = global.Promise;
 mongoose.connect(dbURL, {useNewUrlParser: true});
 
