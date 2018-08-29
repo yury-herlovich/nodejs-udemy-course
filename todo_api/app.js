@@ -15,8 +15,6 @@ const { mongoose } = require('./db/mongoose');
 const { User } = require('./models/user');
 const { Todo } = require('./models/todo');
 
-const port = process.env.PORT;
-
 var app = express();
 
 // add body-parser middleware
@@ -118,8 +116,24 @@ app.patch('/todos/:id', (req, res) => {
     });
 });
 
-app.listen(port, () => {
-  console.log(`Started up at port ${port}.`);
+
+// POST /users
+app.post('/users', (req, res) => {
+  var body = _.pick(req.body, ['email', 'password']);
+
+  var user = new User(body);
+
+  user.save()
+    .then((user) => {
+      res.status(201).send(user);
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
+})
+
+app.listen(process.env.PORT, () => {
+  console.log(`Started up at port ${process.env.PORT}.`);
 });
 
 module.exports = {
