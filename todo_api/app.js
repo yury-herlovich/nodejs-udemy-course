@@ -1,6 +1,6 @@
 // load a proper .env file
 if (process.env.NODE_ENV === 'test') {
-  require('dotenv').config({path: `${process.cwd()}/.env_test`});
+  require('dotenv').config({path: `${process.cwd()}/test.env`});
 } else {
   require('dotenv').config({path: `${process.cwd()}/.env`});
 }

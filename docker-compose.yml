@@ -11,7 +11,7 @@ services:
     volumes:
       - ./todo_api:/application
       - ./.env:/application/.env
-      - ./.env_test:/application/.env_test
+      - ./test.env:/application/test.env
     working_dir: /application
     restart: "no"
 
