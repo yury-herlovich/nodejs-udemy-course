@@ -249,9 +249,7 @@ describe('PATCH /todos/:id', () => {
 
             done();
           })
-          .catch(err => {
-            done(err);
-          });
+          .catch((err) => done(err));
       });
   });
 
@@ -283,9 +281,7 @@ describe('PATCH /todos/:id', () => {
 
             done();
           })
-          .catch(err => {
-            done(err);
-          });
+          .catch((err) => done(err));
       });
   });
 });
@@ -352,9 +348,7 @@ describe('POST /users', () => {
 
             done();
           })
-          .catch((err) => {
-            done(err);
-          });
+          .catch((err) => done(err));
       });
   });
 
@@ -391,6 +385,61 @@ describe('POST /users', () => {
         res.should.have.status(400);
 
         done();
+      });
+  });
+});
+
+describe('POST /users/login', () => {
+  it('should login user and return auth token', (done) => {
+    chai.request(app)
+      .post('/users/login')
+      .send({
+        email: users[1].email,
+        password: users[1].password
+      })
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+
+        res.should.have.status(200);
+        res.should.have.header('x-auth');
+
+        User.findById(users[1]._id)
+          .then((user) => {
+            user.tokens[0].should.include({
+              access: 'auth',
+              token: res.header['x-auth']
+            });
+
+            done();
+          })
+          .catch((err) => done(err));
+      });
+  });
+
+  it('should reject invalid login', (done) => {
+    chai.request(app)
+      .post('/users/login')
+      .send({
+        email: users[1].email,
+        password: users[1].password + '1'
+      })
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+
+        res.should.have.status(403);
+        res.should.not.have.header('x-auth');
+
+        User.findById(users[1]._id)
+          .then((user) => {
+            user.tokens.should.be.empty;
+
+            done();
+          })
+          .catch((err) => done(err));
       });
   });
 });
