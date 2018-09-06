@@ -21,6 +21,7 @@ describe('POST /todos', () => {
 
     chai.request(app)
       .post('/todos')
+      .set('x-auth', users[0].tokens[0].token)
       .send({text})
       .end((err, res) => {
         if (err) {
@@ -46,6 +47,7 @@ describe('POST /todos', () => {
   it('Should not to create a todo with invalide data', (done) => {
     chai.request(app)
       .post('/todos')
+      .set('x-auth', users[0].tokens[0].token)
       .send()
       .end((err, res) => {
         if (err) {
@@ -70,6 +72,7 @@ describe('GET /todos', () => {
   it('Should return array of todos', (done) => {
     chai.request(app)
       .get('/todos')
+      .set('x-auth', users[0].tokens[0].token)
       .send()
       .end((err, res) => {
         if (err) {
@@ -78,7 +81,7 @@ describe('GET /todos', () => {
 
         res.should.have.status(200);
         res.body.should.have.property('todos');
-        res.body.todos.should.lengthOf(2);
+        res.body.todos.should.lengthOf(1);
 
         done();
       });
