@@ -13,6 +13,8 @@ services:
       - ./.env:/application/.env
       - ./test.env:/application/test.env
     working_dir: /application
+    environment:
+      - NODE_ENV=development
     restart: "no"
 
   mongo-express:

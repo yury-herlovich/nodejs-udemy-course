@@ -36,4 +36,6 @@ services:
     working_dir: /application
     links:
       - mongo
+    environment:
+      - NODE_ENV=test
     restart: "no"

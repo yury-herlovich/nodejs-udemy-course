@@ -1,12 +1,6 @@
-// load a proper .env file
-if (process.env.NODE_ENV === 'test') {
-  require('dotenv').config({path: `${process.cwd()}/test.env`});
-} else {
-  require('dotenv').config({path: `${process.cwd()}/.env`});
-}
+require('./config/config');
 
 const _ = require('lodash');
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const { ObjectID } = require('mongodb');
