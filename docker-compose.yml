@@ -9,7 +9,7 @@ services:
       - "3000:3000"
       - "9229:9229"
     volumes:
-      - ./todo_api:/application
+      - ./chat:/application
       - ./.env:/application/.env
       - ./test.env:/application/test.env
     working_dir: /application
