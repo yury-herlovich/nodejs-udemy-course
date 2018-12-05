@@ -1,26 +1,10 @@
 {
-  "scripts": {
-    "start": "node server/app.js",
-    "watch": "nodemon server/app.js --ext js,hbs",
-    "dev": "npm run watch",
-    "debug": "nodemon --inspect-brk=0.0.0.0:9229 app.js",
-    "test": "export NODE_ENV=test && mocha **/*.test.js",
-    "test-watch": "nodemon --exec \"npm test\""
-  },
-  "engines": {
-    "node": "^10.6.0"
-  },
-  "name": "nodejs-course",
+  "name": "server",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "dotenv": "^6.0.0",
-    "express": "^4.16.3"
-  },
-  "devDependencies": {
-    "nodemon": "^1.18.4"
+    "express": "^4.16.4",
+    "socket.io": "^2.2.0"
   }
 }

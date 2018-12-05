@@ -1,0 +1,17 @@
+version: "3.1"
+services:
+
+  backend:
+    command: nodemon -L -e js --delay 2 --inspect=0.0.0.0:9229 server.js
+    container_name: udemy-chat
+    build:
+      context: ../docker.conf/nodeLTS/
+    ports:
+      - "8080:3000"
+      - "9229:9229"
+    volumes:
+      - ./:/application
+    working_dir: /application
+    environment:
+      PORT: 3000
+    restart: "no"
